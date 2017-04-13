@@ -1,14 +1,13 @@
 #pragma once
 #include <string>
 
-class View {
+#include "Observer.hpp"
+#include "FileResults.hpp"
 
-};
-
-class TopSection {
+class TopSection : public Observer {
 public:
 	//Constructor/Destructor
-	TopSection(unsigned long const& textBoxLength);
+	TopSection(unsigned long const& textBoxLength, unsigned short const& width, std::unique_ptr<FileResults> const& fileResults);
 	~TopSection() = default;
 
 	//fields
@@ -22,7 +21,10 @@ public:
 	bool										regexInputTextBoxSelected;
 
 	//const fields
-	unsigned short const						topSectionRowSize;
+	std::unique_ptr<FileResults> const&			fileResults;
+	unsigned short const						width;
+	unsigned long const&						textBoxLength;
+	unsigned short const						sectionSize;
 	std::string const							rootFolderLabel;
 	std::string const							searchRecursivelyLabel;
 	std::string const							searchLabel;
@@ -44,35 +46,51 @@ public:
 	short const									applyFilterButtonRow;
 	short const									applyFilterButtonColumnStart;
 	short const									applyFilterButtonColumnEnd;
+
+	//Method
+	void update() override;
 };
 
-class MiddleSection {
+class MiddleSection : public Observer {
 public:
 	//Constructor/Destructor
-	MiddleSection(short const& height, short const& width, unsigned short const& topSectionSize, unsigned short const& bottomSectionSize);
+	MiddleSection(short const& height, short const& width, unsigned short const& topSectionSize, unsigned short const& bottomSectionSize, std::unique_ptr<FileResults> const& fileResults);
 	~MiddleSection() = default;
 
 	//fields
 	int											linePosition;
 
 	//const fields
-	unsigned short const						fileSectionSize;
+	std::unique_ptr<FileResults> const&			fileResults;
+	unsigned short const						width;
+	unsigned short const						sectionSize;
+	short const									rowOffSet;
 	unsigned short const						verticalScrollBarSize;
 	unsigned short const						pageSize;
 	short const									scrollerXLocation;
 	short const									topScrollerYLocation;
 	short const									bottomScrollerYLocation;
+
+	//Method
+	void update() override;
 };
 
-class BottomSection {
+class BottomSection : public Observer {
 public:
 	//Constructor/Destructor
-	BottomSection();
+	BottomSection(unsigned long const& textBoxLength, unsigned short const& width, std::unique_ptr<FileResults> const& fileResults, short const& rowOffSet);
 	~BottomSection() = default;
 
 	//const fields
-	unsigned short const						bottomSectionSize;
+	std::unique_ptr<FileResults> const&			fileResults;
+	unsigned short const						width;
+	unsigned long const&						textBoxLength;
+	unsigned short const						sectionSize;
+	short const									rowOffSet;
 	std::string const							totalFilesFolderLabel;
 	std::string const							filesMatchedLabel;
 	std::string const							filesMatchedSizeLabel;
+
+	//Method
+	void update() override;
 };

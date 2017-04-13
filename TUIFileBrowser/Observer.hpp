@@ -13,10 +13,10 @@ public:
 };
 
 class Subject {
-	std::set<std::shared_ptr<Observer>> observers;
+	std::set<Observer*>			observers;
 
 public:
-	void attach(std::shared_ptr<Observer> p);
-	void detach(std::shared_ptr<Observer> p);
+	void attach(Observer* const& observer);
+	void detach(Observer* const& observer);
 	void notify();
 };

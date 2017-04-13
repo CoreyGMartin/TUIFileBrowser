@@ -1,6 +1,6 @@
 #include "FileResults.hpp"
 
-FileResults::FileResults(std::string const& rootFolder, bool const& recursiveSearch) : rootFolder(rootFolder), recursiveSearch(recursiveSearch) {
+FileResults::FileResults(std::string const& rootFolder, bool const& recursiveSearch) : rootFolder(rootFolder) /*, recursiveSearch(recursiveSearch)*/ {
 	if (recursiveSearch) {
 		//Recursive
 		for (recursive_directory_iterator dir(rootFolder), dirEnd; dir != dirEnd; ++dir)
@@ -13,7 +13,7 @@ FileResults::FileResults(std::string const& rootFolder, bool const& recursiveSea
 	}
 }
 
-std::vector<std::string> FileResults::Filter(std::string const& regex) {
+void FileResults::Filter(std::string const& regex) {
 	matchedFileSize = 0;
 	numberOfMatchedFiles = 0;
 	filesMatched.clear();
@@ -29,26 +29,26 @@ std::vector<std::string> FileResults::Filter(std::string const& regex) {
 		}
 		else if (is_regular_file(path) && std::regex_match(path.extension().string(), std::regex(regex))) {
 			++numberOfMatchedFiles;
-			matchedFileSize += file_size(path);
+			matchedFileSize += (size_t)file_size(path);
 			filesMatched.push_back(spaces + line.substr(line.find_last_of("\\") + 1));
 		}
 	}
 
+	notify();
+}
+
+std::vector<std::string> const& FileResults::PreviousFilter() {
 	return filesMatched;
 }
 
-std::vector<std::string> FileResults::PreviousFilter() {
-	return filesMatched;
-}
-
-size_t FileResults::FilesFoldersSearched() {
+size_t const& FileResults::FilesFoldersSearched() {
 	return directories.size();
 }
 
-size_t FileResults::MatchedFileSize() {
+size_t const& FileResults::MatchedFileSize() {
 	return matchedFileSize;
 }
 
-size_t FileResults::NumberOfMatchedFiles() {
+size_t const& FileResults::NumberOfMatchedFiles() {
 	return numberOfMatchedFiles;
 }

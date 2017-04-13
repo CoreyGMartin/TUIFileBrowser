@@ -5,16 +5,19 @@
 #include <vector>
 #include <filesystem>
 
+#include "Observer.hpp"
+
 using namespace std::experimental::filesystem;
 
-class FileResults {
+class FileResults : public Subject {
 	//fields
-	std::string const 			rootFolder;
-	bool const					recursiveSearch;
 	std::vector<std::string>	filesMatched;
 	std::vector<path>			directories;
 	size_t						matchedFileSize;
 	size_t						numberOfMatchedFiles;
+
+	//const fields
+	std::string const 			rootFolder;
 
 public:
 	//Constructor/Destructor
@@ -22,9 +25,9 @@ public:
 	~FileResults() = default;
 
 	//Methods
-	std::vector<std::string>	Filter(std::string const& regex);
-	std::vector<std::string>	PreviousFilter();
-	size_t						FilesFoldersSearched();
-	size_t						MatchedFileSize();
-	size_t						NumberOfMatchedFiles();
+	void								Filter(std::string const& regex);
+	std::vector<std::string> const&		PreviousFilter();
+	size_t const&						FilesFoldersSearched();
+	size_t const&						MatchedFileSize();
+	size_t const&						NumberOfMatchedFiles();
 };

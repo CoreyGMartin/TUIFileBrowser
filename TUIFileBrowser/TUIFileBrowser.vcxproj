@@ -294,7 +294,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Commands.cpp" />
-    <ClCompile Include="Component.cpp" />
     <ClCompile Include="FileResults.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="TUIFileBrowser.cpp" />
@@ -302,7 +301,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Commands.hpp" />
-    <ClInclude Include="Component.hpp" />
     <ClInclude Include="FileResults.hpp" />
     <ClInclude Include="Observer.hpp" />
     <ClInclude Include="TUIFileBrowser.hpp" />

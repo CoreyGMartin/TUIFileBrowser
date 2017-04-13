@@ -1,11 +1,11 @@
 #include "Observer.hpp"
 
-void Subject::attach(std::shared_ptr<Observer> p) {
-	observers.insert(p);
+void Subject::attach(Observer* const& observer) {
+	observers.insert(observer);
 }
 
-void Subject::detach(std::shared_ptr<Observer> p) {
-	observers.erase(p);
+void Subject::detach(Observer* const& observer) {
+	observers.erase(observer);
 }
 
 void Subject::notify() {

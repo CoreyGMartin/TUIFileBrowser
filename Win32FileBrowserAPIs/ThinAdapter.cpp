@@ -1,10 +1,7 @@
 #include "ThinAdapter.hpp"
 #include "Win32ConsoleError.hpp"
 
-ThinAdapter::ThinAdapter() : consoleInput(GetStdHandle(STD_INPUT_HANDLE)), consoleOutput(GetStdHandle(STD_OUTPUT_HANDLE)) {
-	//ThinAdapter::consoleInput = GetStdHandle(STD_INPUT_HANDLE);
-	//ThinAdapter::consoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
-}
+ThinAdapter::ThinAdapter() : consoleInput(GetStdHandle(STD_INPUT_HANDLE)), consoleOutput(GetStdHandle(STD_OUTPUT_HANDLE)) {}
 
 void ThinAdapter::getConsoleTitle(char* storage, unsigned long const& size) {
 	THROW_IF_CONSOLE_ERROR(GetConsoleTitleA(storage, size));
@@ -46,7 +43,7 @@ void ThinAdapter::setConsoleCursorPosition(COORD const& curosrPosition) {
 	THROW_IF_CONSOLE_ERROR(SetConsoleCursorPosition(consoleOutput, curosrPosition));
 }
 
-void ThinAdapter::setConsoleCtrlHandler(bool(*handler)(unsigned long) , bool add) {
+void ThinAdapter::setConsoleCtrlHandler(bool(*handler)(unsigned long const), bool const add) {
 	THROW_IF_CONSOLE_ERROR(SetConsoleCtrlHandler((PHANDLER_ROUTINE)handler, add));
 }
 
